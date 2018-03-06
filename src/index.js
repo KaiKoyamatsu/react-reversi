@@ -4,15 +4,8 @@ import './index.css'
 
 function Block (props) {
   return (
-    <div></div>
+    <div className='blocksValue' onClick={props.onClick}>{props.value}</div>
   );
-}
-
-//複数のBlockを宣言する関数コンポーネント
-function BlockList (props) {
-  const blockArray = props.blockArray;
-  const blocks = blockArray.map((value, index) => <Block key={index} />);
-  return <div className='block'>{blocks}</div>;
 }
 
 class Reversi extends React.Component {
@@ -27,10 +20,36 @@ class Reversi extends React.Component {
     };
   }
 
+  //複数のBlockを宣言する関数コンポーネント
+  blockList() {
+    const blockArray = this.state.blockArray;
+    const blocks = blockArray.map((value, index) =>
+      <Block
+        key={index}
+        value={blockArray[index]}
+        onClick={() => this.handleClick(index)}
+      />
+    );
+
+    return <div className='block'>{blocks}</div>;
+  }
+
+  handleClick(i) {
+    const blockArray = this.state.blockArray.slice();
+
+    if (i % 2 == 0) {
+      blockArray[i] = '⚪️';
+    } else {
+      blockArray[i] = '⚫️';
+    }
+
+    this.setState({blockArray:blockArray});
+  }
+
   render() {
     return (
       <div className='field'>
-        <BlockList blockArray = {this.state.blockArray} />
+        {this.blockList()}
       </div>
     );
   }
