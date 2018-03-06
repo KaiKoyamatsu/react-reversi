@@ -14,9 +14,11 @@ class Reversi extends React.Component {
 
     /*
     blockArray: Blockを宣言する配列
+    whiteIsNext: 次が白か判断する変数
     */
     this.state = {
       blockArray: Array(64).fill(null),
+      whiteIsNext: true,
     };
   }
 
@@ -36,14 +38,15 @@ class Reversi extends React.Component {
 
   handleClick(i) {
     const blockArray = this.state.blockArray.slice();
+    blockArray[i] = this.state.whiteIsNext ? '⚪️' : '⚫️';
+    this.setState({
+      blockArray: blockArray,
+      whiteIsNext: !this.state.whiteIsNext,
+    });
+  }
 
-    if (i % 2 == 0) {
-      blockArray[i] = '⚪️';
-    } else {
-      blockArray[i] = '⚫️';
-    }
+  turnOver(blockArray, i) {
 
-    this.setState({blockArray:blockArray});
   }
 
   render() {
