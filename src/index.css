@@ -20,4 +20,7 @@
   height: 30px;
   border: solid thin;
   background: green;
+  font-size: 20px;
+  text-align: center;
+  overflow: hidden;
 }
