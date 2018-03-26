@@ -1,4 +1,10 @@
-.field {
+.reversi {
+  width: 340px;
+  text-align: center;
+}
+
+.reversi-field {
+  margin: 30px;
   padding: 10px;
   width: 260px;
   height: 260px;

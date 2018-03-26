@@ -6,6 +6,10 @@ function Block(props) {
   return (<div onClick={props.onClick}>{props.value}</div>);
 }
 
+function Reset(props) {
+  return (<button onClick={props.onClick}>{props.value}</button>);
+}
+
 class Reversi extends React.Component {
   constructor(props) {
     super(props);
@@ -60,11 +64,43 @@ class Reversi extends React.Component {
     });
   }
 
+  //リセットボタン
+  resetButton() {
+    return (
+      <Reset
+        key={'reset'}
+        value={'リセット'}
+        onClick={() => this.handleClickReset()}
+      />
+    );
+  }
+
+  //リセット処理
+  handleClickReset() {
+    const blockArray = [...this.state.blockArray];
+    const blockArrayCopy = blockArray.map((rowArray, row) =>
+      rowArray.map((colArray, col) =>
+        blockArray[row][col] = null
+      )
+    );
+
+    this.setState({
+      blockArray: blockArrayCopy,
+      whiteIsNext: true
+    });
+  }
+
   render() {
     return (
-      <div className='field'>
-        {this.blockList()}
-      </div>);
+      <div className='reversi'>
+        <div className='reversi-field'>
+          {this.blockList()}
+        </div>
+        <div className='reset-button'>
+          {this.resetButton()}
+        </div>
+      </div>
+    );
   }
 }
 
