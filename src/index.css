@@ -1,0 +1,32 @@
+.reversi {
+  width: 340px;
+  text-align: center;
+}
+
+.reversi-field {
+  margin: 30px;
+  padding: 10px;
+  width: 260px;
+  height: 260px;
+  background-color: black;
+  border-radius: 15px
+}
+
+.block {
+  font-size: 0;
+  width: 256px;
+  height: 256px;
+  border: solid 2px;
+}
+
+.block div {
+  display: inline-block;
+  margin: 0;
+  width: 30px;
+  height: 30px;
+  border: solid thin;
+  background: green;
+  font-size: 20px;
+  text-align: center;
+  overflow: hidden;
+}
