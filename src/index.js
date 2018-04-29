@@ -2,6 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css'
 
+function Result(props) {
+  return (<div>{props.value}</div>);
+}
+
 function Block(props) {
   return (<div onClick={props.onClick}>{props.value}</div>);
 }
@@ -25,6 +29,16 @@ class Reversi extends React.Component {
       blockArray: blockArray,
       whiteIsNext: true
     };
+  }
+
+  //結果の表示
+  reversiResult(str) {
+    return (
+      <Result
+        key={'result'}
+        value={str}
+      />
+    );
   }
 
   //複数のBlockを宣言する関数コンポーネント
@@ -57,6 +71,15 @@ class Reversi extends React.Component {
 
     //探索
     blockArray = search(blockArray, row, col);
+
+    //勝負の判定
+    const res = winJudge(blockArray);
+    if (res.isWin) {
+      console.log('hoge');
+      const resSentence = res.winner == 'd' ? '引き分け' : winner == 'w' ? '白の勝ち' : '黒の勝ち';
+      this.reversiResult(resSentence);
+      return;
+    }
 
     this.setState({
       blockArray: blockArray,
@@ -93,6 +116,9 @@ class Reversi extends React.Component {
   render() {
     return (
       <div className='reversi'>
+        <div className='reversi-result'>
+          {this.reversiResult()}
+        </div>
         <div className='reversi-field'>
           {this.blockList()}
         </div>
@@ -314,3 +340,30 @@ const searchDownLeftSide = (blockArray, row, col) => {
 }
 
 /* ------------------------------------------------------ */
+
+//勝ち判定
+const winJudge = (blockArray) => {
+  const res = [isWin: false, winner: null];
+  let whiteNum = 0;
+  let blackNum = 0;
+
+  blockArray.foreach(currentRow, row) {
+    blockArray[row].foreach(currentCol, col) {
+      if (blockArray[row][col]) whiteNum++;
+      if (!blockArray[row][col]) blackNum++;
+    }
+  }
+
+  if (whiteNum == 0) {
+    res.isWin = true;
+    res.winner = 'b';
+  } else if (blackNum == 0) {
+    res.isWin = true;
+    res.winner = 'w';
+  } else if (whiteNum + blackNum == 64) {
+    res.isWin = true;
+    res.winner = whiteNum == blackNum ? 'd' : whiteNum > blackNum ? 'w' : 'b';
+  }
+
+  return res;
+}

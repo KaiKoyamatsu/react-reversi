@@ -1,2 +1,5 @@
 # ignore cache
 node_modules/.cache/
+
+#lock file
+package-lock.json
